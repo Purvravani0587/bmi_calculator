@@ -25,7 +25,6 @@ enum Gender {
 }
 
 class _InputPageState extends State<InputPage> {
-
   BannerAd? _bannerAd;
   bool _isLoaded = false;
 
@@ -34,31 +33,31 @@ class _InputPageState extends State<InputPage> {
       ? 'ca-app-pub-3940256099942544/6300978111'
       : 'ca-app-pub-3940256099942544/2934735716';
 
-    /// Loads a banner ad.
-    void loadAd() {
-      _bannerAd = BannerAd(
-        adUnitId: adUnitId,
-        request: const AdRequest(),
-        size: AdSize.banner,
-        listener: BannerAdListener(
-          // Called when an ad is successfully received.
-          onAdLoaded: (ad) {
-            debugPrint('$ad loaded.');
-            setState(() {
-              _isLoaded = true;
-            });
-          },
-          // Called when an ad request failed.
-          onAdFailedToLoad: (ad, err) {
-            debugPrint('BannerAd failed to load: $err');
-            // Dispose the ad here to free resources.
-            ad.dispose();
-          },
-        ),
-      )..load();
-    }
+  //load ads
+  void loadAd() {
+    _bannerAd = BannerAd(
+      adUnitId: adUnitId,
+      request: const AdRequest(),
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        // Called when an ad is successfully received.
+        onAdLoaded: (ad) {
+          debugPrint('$ad loaded.');
+          setState(() {
+            _isLoaded = true;
+          });
+        },
+        // Called when an ad request failed.
+        onAdFailedToLoad: (ad, err) {
+          debugPrint('BannerAd failed to load: $err');
+          // Dispose the ad here to free resources.
+          ad.dispose();
+        },
+      ),
+    )..load();
+  }
 
-
+//start first of all
   @override
   void initState() {
     // TODO: implement initState
@@ -74,6 +73,7 @@ class _InputPageState extends State<InputPage> {
   int age = 20;
   var cnt = 0;
 
+//last methods
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -280,14 +280,19 @@ class _InputPageState extends State<InputPage> {
               );
             },
           ),
-          (_bannerAd!=null)?Align(alignment: Alignment.bottomCenter,
-            child: SafeArea(
-              child: SizedBox(
-                width: _bannerAd!.size.width.toDouble(),
-                height: _bannerAd!.size.height.toDouble(),
-                child: AdWidget(ad: _bannerAd!),
-              ),
-            ),):Text("No ads")
+          //ads show in the first app
+          (_bannerAd != null)
+              ? Align(
+                  alignment: Alignment.bottomCenter,
+                  child: SafeArea(
+                    child: SizedBox(
+                      width: _bannerAd!.size.width.toDouble(),
+                      height: _bannerAd!.size.height.toDouble(),
+                      child: AdWidget(ad: _bannerAd!),
+                    ),
+                  ),
+                )
+              : Text("No ads")
         ],
       ),
 
